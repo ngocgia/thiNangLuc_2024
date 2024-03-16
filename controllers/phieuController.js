@@ -4,9 +4,8 @@ const User = require('../models/userModel');
 
 const getAllPhieu = async (req, res) => {
     try {
-      // const userId = req.userData?.userId;
-      // const phieus = await Phieu.find({ idNguoiTao: userId })
-      const phieus = await Phieu.find()
+      const userId = req.userData?.userId;
+      const phieus = await Phieu.find({ idNguoiTao: userId })
       res.json(phieus);
     } catch (err) {
       res.status(500).json({ message: err.message });
