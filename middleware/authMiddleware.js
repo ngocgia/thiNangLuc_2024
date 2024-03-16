@@ -1,4 +1,3 @@
-// middleware/authMiddleware.js
 
 const jwt = require('jsonwebtoken');
 
@@ -8,6 +7,7 @@ const authMiddleware = (req, res, next) => {
     if (!token) {
       return res.status(401).json({ message: 'Không có token, xác thực thất bại' });
     }
+    
     const decodedToken = jwt.verify(token, 'Mini1234');
     if (decodedToken.exp <= Date.now() / 10000) {
       return res.status(401).json({ message: 'Token đã hết hạn, xác thực thất bại' });
