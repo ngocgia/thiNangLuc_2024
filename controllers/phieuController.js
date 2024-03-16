@@ -4,8 +4,9 @@ const User = require('../models/userModel');
 
 const getAllPhieu = async (req, res) => {
     try {
-      const userId = req.userData.userId;
-      const phieus = await Phieu.find({ creatorId: userId })
+      // const userId = req.userData?.userId;
+      // const phieus = await Phieu.find({ idNguoiTao: userId })
+      const phieus = await Phieu.find()
       res.json(phieus);
     } catch (err) {
       res.status(500).json({ message: err.message });
@@ -14,10 +15,10 @@ const getAllPhieu = async (req, res) => {
 
 const getOnePhieu = async (req, res) => {
     try {
-      const userId = req.userData.userId;
+      const userId = req.userData?.userId;
       const phieus = await Phieu.findById(req.params.id)
         .then((phieu) => {
-          if (phieu.creatorId.equals(userId)) {
+          if (phieu.idNguoiTao.equals(userId)) {
             res.status(200).json(phieu);
         } else {
             res.status(403).send('Bạn không có quyền truy cập vào bài viết này');
@@ -31,7 +32,7 @@ const getOnePhieu = async (req, res) => {
 
 const createPhieu = async (req, res) => {
     const phieus = new Phieu({
-        creatorId: req.userData.userId,
+        idNguoiTao: req.userData?.userId,
         trangThai: req.body.trangThai,
         loaiDV: req.body.loaiDV,
         thoiGianBD: req.body.thoiGianBD,
