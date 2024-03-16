@@ -9,6 +9,9 @@ const authMiddleware = (req, res, next) => {
       return res.status(401).json({ message: 'Không có token, xác thực thất bại' });
     }
     const decodedToken = jwt.verify(token, 'Mini1234');
+    if (decodedToken.exp <= Date.now() / 10000) {
+      return res.status(401).json({ message: 'Token đã hết hạn, xác thực thất bại' });
+    };
     req.userData = { userId: decodedToken.userId };
     next();
   } catch (error) {

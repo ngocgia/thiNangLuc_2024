@@ -1,6 +1,5 @@
 const bcrypt = require("bcrypt");
 const User = require("../models/userModel");
-const express = require('express');
 const jwt = require('jsonwebtoken');
 
 const loginUser = async (req, res) => {
@@ -26,4 +25,9 @@ const loginUser = async (req, res) => {
   }
 };
 
-module.exports = { loginUser };
+const logOut = (req, res) => {
+  res.clearCookie('token');
+  res.status(200).json({ message: 'Đăng xuất thành công!' });
+}
+
+module.exports = { loginUser, logOut };
